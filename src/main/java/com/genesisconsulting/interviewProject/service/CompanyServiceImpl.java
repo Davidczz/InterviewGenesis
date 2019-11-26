@@ -3,6 +3,7 @@ package com.genesisconsulting.interviewProject.service;
 import com.genesisconsulting.interviewProject.exception.EntityNotFoundException;
 import com.genesisconsulting.interviewProject.model.Address;
 import com.genesisconsulting.interviewProject.model.Company;
+import com.genesisconsulting.interviewProject.model.Contact;
 import com.genesisconsulting.interviewProject.repository.CompanyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -77,6 +79,17 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = getCompanyById(companyId);
         company.getEmployees().add(contactService.findContactById(contactId));
         return companyRepository.save(company);
+    }
+
+    @Override
+    public Company removeEmployee(Long companyId, Long contactId) {
+        Company company = getCompanyById(companyId);
+        Optional<Contact> contact = company.getEmployees().stream().filter(c -> c.getId().equals(contactId)).findFirst();
+        if(contact.get() == null){
+            return null;
+        }
+        company.getEmployees().remove(contact.get());
+        return updateCompany(company);
     }
 
     @Override

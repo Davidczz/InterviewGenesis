@@ -33,6 +33,11 @@ public class CompanyController {
         return companyService.addEmployeeToCompany(contactId, id);
     }
 
+    @DeleteMapping("/company/{id}/removeEmployee/{contactId}")
+    private Company removeEmployee(@PathVariable Long contactId, @PathVariable Long id){
+        return companyService.removeEmployee(id, contactId);
+    }
+
     @DeleteMapping("/company/{id}")
     private void deleteById(@PathVariable Long id){
         companyService.deleteCompany(id);

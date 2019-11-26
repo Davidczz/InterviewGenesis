@@ -11,5 +11,6 @@ public interface CompanyService {
     List<Company> getAllCompanies();
     Company updateCompany(Company company);
     Company addEmployeeToCompany(Long contactId, Long companyId);
+    Company removeEmployee(Long companyId, Long contactId);
     void deleteCompany(Long id) throws EntityNotFoundException;
 }

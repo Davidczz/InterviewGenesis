@@ -25,6 +25,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address updateAddress(Address address) {
+        if(address.getId() == null) return null;
         return saveAddress(address);
     }
 
